@@ -1,0 +1,35 @@
+#include "myqlabel.h"
+
+myQLabel::myQLabel(int _intIndex, QWidget *parent) :
+    QLabel(parent)
+{
+    intIndex = _intIndex;
+}
+
+void myQLabel::mousePressEvent(QMouseEvent *ev)
+{
+    //emit clicked(intIndex);
+}
+
+void myQLabel::keyPressEvent(QKeyEvent *ev)
+{
+
+}
+
+bool myQLabel::event(QEvent *e)
+{
+    qDebug()<<e->type();
+    if(e->type()==e->MouseMove){
+        blnScrolled=true;
+    }else if(e->type()==e->TouchEnd){
+        if(!blnScrolled){
+        emit clicked(intIndex);
+        }
+        else{
+        blnScrolled=false;
+    }
+
+    }
+
+    QLabel::event(e);
+}
